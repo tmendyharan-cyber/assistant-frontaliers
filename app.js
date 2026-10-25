@@ -7,6 +7,7 @@ document.getElementById("disc").textContent = DISCLAIMER;
 // Les réponses ne quittent jamais le navigateur : aucune requête réseau, aucun stockage.
 const answers = {};
 let index = 0;
+let firstRender = true;
 
 const visibleQuestions = () => QUESTIONS.filter((q) => !q.showIf || q.showIf(answers));
 
@@ -21,6 +22,12 @@ function el(tag, props = {}, ...children) {
   return node;
 }
 
+// Après chaque changement d'écran, place le focus sur le titre pour les lecteurs d'écran et le clavier.
+function focusHeading(node) {
+  if (firstRender) { firstRender = false; return; }
+  node.focus();
+}
+
 function renderQuestion() {
   const qs = visibleQuestions();
   if (index >= qs.length) return renderResult();
@@ -30,13 +37,14 @@ function renderQuestion() {
       ? [{ value: "oui", label: "Oui" }, { value: "non", label: "Non" }]
       : q.options;
 
-  const opts = el("div", { class: "opts" });
+  const opts = el("div", { class: "opts", role: "group", "aria-labelledby": "q-label" });
   for (const o of options) {
     opts.append(
       el(
         "button",
         {
-          class: answers[q.id] === o.value ? "sel" : "",
+          type: "button",
+          "aria-pressed": answers[q.id] === o.value ? "true" : "false",
           onclick: () => {
             answers[q.id] = o.value;
             index += 1;
@@ -48,18 +56,20 @@ function renderQuestion() {
     );
   }
 
+  const heading = el("h2", { class: "q", id: "q-label", tabindex: "-1" }, q.label);
   app.replaceChildren(
     el(
       "div",
       { class: "card" },
       el("div", { class: "step" }, `Question ${index + 1} sur ${qs.length}`),
-      el("p", { class: "q" }, q.label),
+      heading,
       opts,
       index > 0
-        ? el("div", { class: "actions" }, el("button", { onclick: () => { index -= 1; renderQuestion(); } }, "Retour"))
+        ? el("div", { class: "actions" }, el("button", { type: "button", onclick: () => { index -= 1; renderQuestion(); } }, "Retour"))
         : ""
     )
   );
+  focusHeading(heading);
 }
 
 export function applicableRules(a) {
@@ -68,7 +78,8 @@ export function applicableRules(a) {
 
 function renderResult() {
   const rules = applicableRules(answers);
-  const nodes = [el("h2", {}, "Votre checklist")];
+  const heading = el("h2", { tabindex: "-1" }, "Votre checklist");
+  const nodes = [heading];
 
   for (const r of rules) {
     const card = el("div", { class: "card rule" });
@@ -76,7 +87,7 @@ function renderResult() {
     card.append(
       el("h3", {}, r.title),
       el("p", {}, r.detail),
-      el("a", { href: r.source.url, target: "_blank", rel: "noopener noreferrer" }, r.source.label)
+      el("a", { href: r.source.url, target: "_blank", rel: "noopener noreferrer" }, r.source.label, el("span", { class: "sr-only" }, " (nouvel onglet)"))
     );
     nodes.push(card);
   }
@@ -92,9 +103,10 @@ function renderResult() {
       "form",
       { class: "card", method: "post", action: WAITLIST_ENDPOINT },
       el("h3", {}, "Être prévenu pour la campagne 2027"),
-      el("p", {}, "Laissez votre e-mail : seule cette adresse est conservée, avec votre accord, pour vous prévenir à l'ouverture de la version complète."),
-      el("input", { type: "email", name: "email", required: "", placeholder: "vous@exemple.fr", "aria-label": "Adresse e-mail" }),
-      el("label", {}, el("input", { type: "checkbox", required: "" }), " J'accepte d'être contacté à ce sujet."),
+      el("p", {}, "Laissez votre e-mail : seule cette adresse est conservée, avec votre accord, pour vous prévenir à l'ouverture de la version complète. ", el("a", { href: "confidentialite.html" }, "Politique de confidentialité")),
+      el("label", { for: "waitlist-email" }, "Adresse e-mail"),
+      el("input", { type: "email", id: "waitlist-email", name: "email", required: "", autocomplete: "email", placeholder: "vous@exemple.fr" }),
+      el("label", {}, el("input", { type: "checkbox", name: "consentement", value: "oui", required: "" }), " J'accepte que mon adresse soit conservée pour être prévenu de l'ouverture de la version complète."),
       el("button", { class: "primary", type: "submit" }, "M'inscrire")
     );
     nodes.push(form);
@@ -104,11 +116,12 @@ function renderResult() {
     el(
       "div",
       { class: "actions" },
-      el("button", { class: "primary", onclick: () => window.print() }, "Imprimer / enregistrer en PDF"),
-      el("button", { onclick: () => { for (const k of Object.keys(answers)) delete answers[k]; index = 0; renderQuestion(); } }, "Recommencer")
+      el("button", { type: "button", class: "primary", onclick: () => window.print() }, "Imprimer / enregistrer en PDF"),
+      el("button", { type: "button", onclick: () => { for (const k of Object.keys(answers)) delete answers[k]; index = 0; renderQuestion(); } }, "Recommencer")
     )
   );
   app.replaceChildren(...nodes);
+  focusHeading(heading);
 }
 
 renderQuestion();

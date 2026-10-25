@@ -127,4 +127,4 @@ export const DOCUMENTS = [
 ];
 
 export const DISCLAIMER =
-  "Cet outil est un guide d'information fondé sur des notices officielles. Il ne fournit ni conseil fiscal personnalisé ni calcul d'impôt. Vérifiez chaque point sur impots.gouv.fr ou auprès de l'administration fiscale compétente.";
+  "Cet outil d'information s'appuie sur des notices officielles. Il ne fournit ni conseil fiscal personnalisé ni calcul d'impôt. Vérifiez chaque point sur impots.gouv.fr ou auprès de l'administration fiscale compétente.";
