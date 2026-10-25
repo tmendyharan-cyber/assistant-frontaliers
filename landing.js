@@ -7,6 +7,21 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 let billing = "yearly";
 let chosenPlan = "essentiel";
 
+// Canal d'arrivée, pour savoir quelle communication fonctionne. Facultatif pour le visiteur.
+// Un lien partagé avec ?src=facebook (ou reddit, linkedin…) pré-sélectionne le canal.
+const CHANNELS = [
+  { value: "", label: "Choisir (facultatif)" },
+  { value: "facebook", label: "Groupe Facebook" },
+  { value: "reddit", label: "Reddit" },
+  { value: "linkedin", label: "LinkedIn" },
+  { value: "google", label: "Recherche Google" },
+  { value: "bouche-a-oreille", label: "Un collègue ou un proche" },
+  { value: "association", label: "Association de frontaliers" },
+  { value: "autre", label: "Autre" },
+];
+const srcParam = new URLSearchParams(location.search).get("src");
+const arrivalChannel = CHANNELS.some((c) => c.value && c.value === srcParam) ? srcParam : "";
+
 function el(tag, props = {}, ...children) {
   const node = document.createElement(tag);
   for (const [k, v] of Object.entries(props)) {
@@ -98,6 +113,12 @@ function renderWaitlist() {
     el("input", { type: "hidden", id: "waitlist-billing", name: "periodicite", value: billing }),
     el("label", { for: "waitlist-email" }, "Adresse e-mail"),
     el("input", { type: "email", id: "waitlist-email", name: "email", required: "", autocomplete: "email", placeholder: "vous@exemple.fr" }),
+    el("label", { for: "waitlist-channel" }, "Comment nous avez-vous connu ?"),
+    el("select", { id: "waitlist-channel", name: "canal" }, ...CHANNELS.map((c) => {
+      const o = el("option", { value: c.value }, c.label);
+      if (c.value === arrivalChannel) o.selected = true;
+      return o;
+    })),
     el("label", { class: "check" }, el("input", { type: "checkbox", name: "consentement", value: "oui", required: "" }), el("span", {}, "J'accepte que mon adresse soit conservée pour être prévenu de l'ouverture des formules.")),
     el("div", { class: "actions" }, el("button", { class: "primary", type: "submit" }, "Réserver ma place")),
     status
@@ -109,7 +130,7 @@ function renderWaitlist() {
     try {
       const res = await fetch(WAITLIST_ENDPOINT, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
       if (!res.ok) throw new Error(String(res.status));
-      track("Pre-inscription", { formule: form.formule.value, periodicite: form.periodicite.value });
+      track("Pre-inscription", { formule: form.formule.value, periodicite: form.periodicite.value, canal: form.canal.value });
       form.replaceChildren(el("p", { class: "form-status", role: "status" }, "Merci ! Vous serez prévenu à l'ouverture."));
     } catch {
       status.textContent = "L'envoi n'a pas abouti. Réessayez dans un instant.";
