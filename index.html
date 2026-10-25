@@ -13,23 +13,143 @@
   <meta property="og:description" content="Répondez à quelques questions et obtenez la checklist des formulaires et des pièces pour votre déclaration française. Outil d'information, vos réponses restent dans votre navigateur.">
   <meta property="og:url" content="https://tmendyharan-cyber.github.io/assistant-frontaliers/">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-<a class="skip" href="#app">Aller au questionnaire</a>
+<a class="skip" href="#assistant">Aller au questionnaire</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">AF</span>Assistant frontaliers</a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="#fonctionnement">Fonctionnement</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="articles/">Guides</a>
+      <a class="btn btn-primary" href="#assistant">Essayer<span class="hide-sm"> gratuitement</span></a>
+    </nav>
+  </div>
+</header>
+
 <main>
-  <h1>Assistant déclaration frontaliers</h1>
-  <p class="lead">Répondez à quelques questions, obtenez votre checklist de formulaires et de pièces. Vos réponses restent dans votre navigateur.</p>
-  <div id="app"></div>
-  <p class="disc" id="disc"></p>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Frontaliers France – Suisse · Campagne 2027</span>
+        <h1 id="hero-title">Votre déclaration de frontalier, <span class="grad">sans rien oublier.</span></h1>
+        <p class="lead">Quelques questions, et vous savez quels formulaires remplir (2042, 2047, 3916…) et quelles pièces réunir. Chaque point renvoie à sa source officielle.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#assistant">Faire ma checklist gratuite</a>
+          <a class="btn btn-lg" href="#tarifs">Voir les formules</a>
+        </div>
+        <ul class="trust">
+          <li>Sans inscription</li>
+          <li>Réponses gardées dans votre navigateur</li>
+          <li>Sources officielles citées</li>
+        </ul>
+      </div>
+      <div class="scene" aria-hidden="true">
+        <div class="tilt" id="tilt">
+          <div class="mock">
+            <div class="mock-head"><span></span><span></span><span></span></div>
+            <h3>Votre checklist · Genève</h3>
+            <div class="mock-item"><span class="tick">✓</span>Déclaration 2042 et annexe 2047</div>
+            <div class="mock-item"><span class="tick">✓</span>Formulaire 3916 pour chaque compte suisse</div>
+            <div class="mock-item"><span class="tick">✓</span>Taxation ordinaire ultérieure : à étudier</div>
+            <div class="mock-item"><span class="tick">✓</span>Certificat de salaire suisse</div>
+          </div>
+          <div class="chip c1">2047<small>Revenus étrangers</small></div>
+          <div class="chip c2">3916<small>Comptes à l'étranger</small></div>
+          <div class="chip c3">31 mars<small>Délai DRIS/TOU</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="fonctionnement" aria-labelledby="fonctionnement-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="fonctionnement-title">Comment ça marche</h2>
+        <p>Trois minutes, aucun compte à créer.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal"><div class="step-num">1</div><h3>Répondez</h3><p>Canton de travail, comptes en Suisse, télétravail, foyer : 4 ou 5 questions.</p></div>
+        <div class="card reveal"><div class="step-num">2</div><h3>Obtenez votre checklist</h3><p>Formulaires concernés et pièces à réunir, chacun avec sa source officielle.</p></div>
+        <div class="card reveal"><div class="step-num">3</div><h3>Vérifiez et déclarez</h3><p>Les points encore à confirmer sont signalés. Imprimez ou enregistrez en PDF.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="assistant" aria-labelledby="assistant-title" tabindex="-1">
+    <div class="wrap assistant-shell">
+      <div class="section-head">
+        <h2 id="assistant-title">Votre checklist gratuite</h2>
+        <p>Vos réponses restent dans votre navigateur : rien n'est envoyé ni enregistré.</p>
+      </div>
+      <div id="app"></div>
+      <p class="disc" id="disc"></p>
+    </div>
+  </section>
+
+  <section class="section alt" id="tarifs" aria-labelledby="tarifs-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="tarifs-title">Des formules simples</h2>
+        <p>La checklist reste gratuite. Les formules payantes ajoutent le suivi d'une année sur l'autre. Elles sont en préparation : réservez votre place au prix de lancement.</p>
+      </div>
+      <div class="billing" role="group" aria-label="Périodicité">
+        <button type="button" data-billing="yearly" aria-pressed="true">Annuel <span class="save" id="save"></span></button>
+        <button type="button" data-billing="monthly" aria-pressed="false">Mensuel</button>
+      </div>
+      <div class="plans" id="plans"></div>
+      <p class="price-note">Prix de lancement indicatifs, TTC. <strong>Aucun paiement aujourd'hui</strong> : la pré-inscription sert à vous prévenir à l'ouverture. Aucune formule ne fournit de calcul d'impôt ni de conseil fiscal personnalisé.</p>
+
+      <div class="card waitlist reveal" id="liste">
+        <h3>Réserver ma place</h3>
+        <div id="waitlist"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guides" aria-labelledby="guides-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="guides-title">Guides</h2>
+        <p>Les points clés, vérifiés sur les sources officielles, avec ce qui reste à confirmer.</p>
+      </div>
+      <div class="grid-3">
+        <a class="card link reveal" href="articles/formulaire-2047-suisse-frontalier.html"><h3>Formulaire 2047 : salaire suisse d'un frontalier</h3><p>Pourquoi un salaire genevois se déclare en France, et le crédit d'impôt.</p><span class="more">Lire le guide →</span></a>
+        <a class="card link reveal" href="articles/3916-compte-bancaire-suisse-frontalier.html"><h3>3916 : déclarer ses comptes suisses</h3><p>Quels comptes, comment, et ce que risque un oubli.</p><span class="more">Lire le guide →</span></a>
+        <a class="card link reveal" href="articles/quasi-resident-geneve-taxation-ordinaire-ulterieure.html"><h3>Quasi-résident à Genève et TOU</h3><p>La règle des 90 %, les autres cas et le délai du 31 mars.</p><span class="more">Lire le guide →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap" style="max-width:760px">
+      <div class="section-head"><h2 id="faq-title">Questions fréquentes</h2></div>
+      <details><summary>Est-ce un conseil fiscal ?</summary><p>Non. C'est un outil d'information : il liste les formulaires et les pièces à prévoir selon vos réponses, avec la source de chaque point. Il ne calcule pas votre impôt et ne remplace ni les notices officielles ni l'administration fiscale.</p></details>
+      <details><summary>Que deviennent mes réponses ?</summary><p>Elles restent dans votre navigateur et disparaissent quand vous fermez la page. Seule l'adresse e-mail que vous laissez volontairement pour la pré-inscription est conservée. <a href="confidentialite.html">Politique de confidentialité</a>.</p></details>
+      <details><summary>Quels cantons sont couverts ?</summary><p>Genève en priorité, ainsi que les huit cantons de l'accord frontalier de 1983 (Berne, Soleure, Bâle-Ville, Bâle-Campagne, Vaud, Valais, Neuchâtel, Jura). Les autres cantons ne sont pas encore couverts.</p></details>
+      <details><summary>Pourquoi des points « À confirmer » ?</summary><p>Certains points n'ont pas encore été vérifiés sur la notice officielle de la campagne en cours. Ils sont signalés pour que vous les contrôliez avant de déclarer.</p></details>
+      <details><summary>Quand les formules payantes ouvrent-elles ?</summary><p>Elles sont en préparation pour la campagne de déclaration 2027. Pré-inscrivez-vous pour être prévenu. Aucun paiement n'est demandé aujourd'hui.</p></details>
+    </div>
+  </section>
 </main>
+
 <footer>
-  <nav aria-label="Informations légales">
-    <a href="mentions-legales.html">Mentions légales</a>
-    <a href="confidentialite.html">Confidentialité</a>
-  </nav>
+  <div class="wrap">
+    <p>Assistant frontaliers est un outil d'information : ni conseil fiscal personnalisé, ni calcul d'impôt. Vérifiez chaque point sur impots.gouv.fr, ge.ch ou auprès de l'administration compétente.</p>
+    <nav aria-label="Informations légales">
+      <a href="articles/">Guides</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="confidentialite.html">Confidentialité</a>
+    </nav>
+  </div>
 </footer>
 <script type="module" src="analytics.js"></script>
 <script type="module" src="app.js"></script>
+<script type="module" src="landing.js"></script>
 </body>
 </html>

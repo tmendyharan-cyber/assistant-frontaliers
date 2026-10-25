@@ -15,3 +15,50 @@ export const ANALYTICS = {
   domain: "",
   websiteId: "",
 };
+
+// Formules affichées sur la page de tarifs. Prix de lancement indicatifs : aucun paiement n'est encaissé,
+// le bouton inscrit seulement sur la liste d'attente avec la formule choisie (test de la demande).
+// Ne listez ici que des fonctionnalités d'information : pas de calcul d'impôt, pas de conseil personnalisé.
+export const PLANS = [
+  {
+    id: "gratuit",
+    name: "Gratuit",
+    monthly: 0,
+    yearly: 0,
+    pitch: "Pour savoir quoi préparer.",
+    features: [
+      "Checklist des formulaires et des pièces",
+      "Source officielle pour chaque point",
+      "Impression ou PDF",
+    ],
+  },
+  {
+    id: "essentiel",
+    name: "Essentiel",
+    monthly: 3.9,
+    yearly: 29,
+    highlight: true,
+    pitch: "Pour ne rien oublier, chaque année.",
+    features: [
+      "Tout le gratuit",
+      "Checklist sauvegardée d'une année sur l'autre",
+      "Rappels des dates (déclaration française, DRIS/TOU)",
+      "Alerte quand une notice officielle change",
+      "Guide pas à pas des formulaires, avec sources",
+    ],
+  },
+  {
+    id: "foyer",
+    name: "Foyer",
+    monthly: 6.9,
+    yearly: 49,
+    pitch: "Pour les couples et les situations mixtes.",
+    features: [
+      "Tout Essentiel",
+      "Plusieurs situations dans un même foyer (ex. Genève et Vaud)",
+      "Dossier PDF complet avec la liste des justificatifs",
+      "Historique sur plusieurs années",
+      "Aide par e-mail sur l'utilisation de l'outil",
+    ],
+  },
+];

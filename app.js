@@ -1,5 +1,4 @@
 import { QUESTIONS, RULES, DOCUMENTS, DISCLAIMER } from "./rules.js";
-import { WAITLIST_ENDPOINT } from "./config.js";
 
 const app = document.getElementById("app");
 document.getElementById("disc").textContent = DISCLAIMER;
@@ -57,10 +56,12 @@ function renderQuestion() {
   }
 
   const heading = el("h2", { class: "q", id: "q-label", tabindex: "-1" }, q.label);
+  const progress = el("div", { class: "progress", "aria-hidden": "true" }, el("span", { style: `width:${Math.round((index / qs.length) * 100)}%` }));
   app.replaceChildren(
     el(
       "div",
-      { class: "card" },
+      { class: "card fade-in" },
+      progress,
       el("div", { class: "step" }, `Question ${index + 1} sur ${qs.length}`),
       heading,
       opts,
@@ -98,19 +99,15 @@ function renderResult() {
   docs.append(ul);
   nodes.push(docs);
 
-  if (WAITLIST_ENDPOINT) {
-    const form = el(
-      "form",
-      { class: "card", method: "post", action: WAITLIST_ENDPOINT },
-      el("h3", {}, "Être prévenu pour la campagne 2027"),
-      el("p", {}, "Laissez votre e-mail : seule cette adresse est conservée, avec votre accord, pour vous prévenir à l'ouverture de la version complète. ", el("a", { href: "confidentialite.html" }, "Politique de confidentialité")),
-      el("label", { for: "waitlist-email" }, "Adresse e-mail"),
-      el("input", { type: "email", id: "waitlist-email", name: "email", required: "", autocomplete: "email", placeholder: "vous@exemple.fr" }),
-      el("label", {}, el("input", { type: "checkbox", name: "consentement", value: "oui", required: "" }), " J'accepte que mon adresse soit conservée pour être prévenu de l'ouverture de la version complète."),
-      el("button", { class: "primary", type: "submit" }, "M'inscrire")
-    );
-    nodes.push(form);
-  }
+  nodes.push(
+    el(
+      "div",
+      { class: "card upsell" },
+      el("h3", {}, "Ne rien oublier l'an prochain"),
+      el("p", {}, "Les formules en préparation sauvegardent votre checklist, vous rappellent les dates et vous préviennent quand une notice change."),
+      el("a", { class: "btn btn-primary", href: "#tarifs" }, "Voir les formules")
+    )
+  );
 
   nodes.push(
     el(

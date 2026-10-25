@@ -12,3 +12,9 @@ if (src && ((provider === "plausible" && domain) || (provider === "umami" && web
   else s.dataset.websiteId = websiteId;
   document.head.append(s);
 }
+
+// Événement personnalisé (ex. clic sur une formule). Sans effet tant que la mesure est désactivée.
+export function track(name, props = {}) {
+  if (provider === "plausible") window.plausible?.(name, { props });
+  else if (provider === "umami") window.umami?.track(name, props);
+}
