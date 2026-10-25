@@ -87,9 +87,13 @@ function renderResult() {
     if (r.status === "a_verifier") card.append(el("span", { class: "badge" }, "À confirmer avec la notice officielle"));
     card.append(
       el("h3", {}, r.title),
-      el("p", {}, r.detail),
-      el("a", { href: r.source.url, target: "_blank", rel: "noopener noreferrer" }, r.source.label, el("span", { class: "sr-only" }, " (nouvel onglet)"))
+      el("p", {}, r.detail)
     );
+    // Une règle peut citer plusieurs sources : la principale, puis les complémentaires (moreSources).
+    const links = [r.source, ...(r.moreSources || [])].map((src) =>
+      el("a", { href: src.url, target: "_blank", rel: "noopener noreferrer" }, src.label, el("span", { class: "sr-only" }, " (nouvel onglet)"))
+    );
+    card.append(...links.flatMap((a, i) => (i ? [el("br"), a] : [a])));
     nodes.push(card);
   }
 

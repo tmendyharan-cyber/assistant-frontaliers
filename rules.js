@@ -95,8 +95,11 @@ export const RULES = [
     when: (a) => a.canton === "GE",
     title: "Quasi-résident genevois : taxation ordinaire ultérieure (TOU)",
     detail:
-      "Condition principale : au moins 90 % de vos revenus bruts mondiaux annuels (conjoint compris) sont imposables en Suisse. D'autres situations ouvrent aussi la TOU sur demande (déductions impossibles dans le pays de résidence, prévoyance étrangère reconnue, garde alternée). La demande doit être renouvelée chaque année. Pour les situations particulières, le délai est le 31 mars de l'année qui suit l'imposition ; la page officielle ne précise pas de date pour la demande quasi-résident : confirmez-la auprès de l'administration fiscale genevoise.",
+      "Condition principale : au moins 90 % de vos revenus bruts mondiaux annuels (conjoint compris) sont imposables en Suisse. D'autres situations ouvrent aussi la TOU sur demande (déductions impossibles dans le pays de résidence, prévoyance étrangère reconnue, garde alternée). La demande doit être renouvelée chaque année. Elle se fait avec le formulaire DRIS/TOU (en ligne ou par courrier), qui doit parvenir à l'administration fiscale genevoise au plus tard le 31 mars de l'année suivant le prélèvement de l'impôt, même s'il manque des justificatifs. Attention : une fois déposée, la demande ne peut plus être annulée, même si la taxation finale est défavorable.",
     source: { label: "ge.ch — taxation ordinaire ultérieure", url: "https://www.ge.ch/demande-rectification-taxation-ordinaire-ulterieure/quand-demander-annoncer-taxation-ordinaire-ulterieure" },
+    moreSources: [
+      { label: "ge.ch — formulaire DRIS/TOU : délai et irrévocabilité", url: "https://www.ge.ch/demande-rectification-taxation-ordinaire-ulterieure/comment-remplir-formulaire-dris/tou" },
+    ],
     status: "verifie",
   },
   {
