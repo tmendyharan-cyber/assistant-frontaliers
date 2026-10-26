@@ -58,7 +58,7 @@ export const PLANS = [
       "Plusieurs situations dans un même foyer (ex. Genève et Vaud)",
       "Dossier PDF complet avec la liste des justificatifs",
       "Historique sur plusieurs années",
-      "Aide par e-mail sur l'utilisation de l'outil",
+      "Aide sur l'utilisation de l'outil par e-mail (réponse sous 72 h)",
     ],
   },
 ];
