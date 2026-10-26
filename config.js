@@ -5,7 +5,7 @@ export const WAITLIST_ENDPOINT = "https://formspree.io/f/myeeeedw";
 
 // Mesure d'audience sans cookie. Désactivée tant que provider est vide.
 // provider : "plausible" ou "umami".
-// - Plausible : domain = "tmendyharan-cyber.github.io" (le domaine déclaré dans Plausible),
+// - Plausible : domain = "declicfrontalier.fr" (le domaine déclaré dans Plausible),
 //   src = "https://plausible.io/js/script.js" (ou l'URL de votre instance).
 // - Umami : websiteId = l'identifiant du site dans Umami, src = l'URL du script de votre instance.
 // Pensez à mettre à jour la section « Mesure d'audience » de confidentialite.html en l'activant.

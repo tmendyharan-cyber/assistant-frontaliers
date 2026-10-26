@@ -1,7 +1,4 @@
-# Attention : les robots ne lisent robots.txt qu'à la racine du domaine.
-# Sur https://tmendyharan-cyber.github.io/assistant-frontaliers/ ce fichier n'est pas pris en compte ;
-# il le sera si le site passe sur un domaine personnalisé.
 User-agent: *
 Allow: /
 
-Sitemap: https://tmendyharan-cyber.github.io/assistant-frontaliers/sitemap.xml
+Sitemap: https://declicfrontalier.fr/sitemap.xml
