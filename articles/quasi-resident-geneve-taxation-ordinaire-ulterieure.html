@@ -93,6 +93,20 @@
     <p>Répondez à quelques questions et obtenez votre checklist gratuite, avec la source de chaque point. Vos réponses restent dans votre navigateur.</p>
     <a class="btn btn-primary" href="../#assistant">Faire ma checklist</a>
   </div>
+  <div class="card upsell" hidden>
+    <h2 style="margin:0 0 6px;font-size:1.15rem">Recevoir un rappel avant la déclaration 2027</h2>
+    <form data-signup method="post">
+      <p>Un e-mail gratuit quand les documents officiels de la campagne 2027 sortent, et à l'ouverture des formules. Seule votre adresse est conservée. <a href="../confidentialite.html">Confidentialité</a></p>
+      <input type="hidden" name="formule" value="rappels-gratuits">
+      <input type="hidden" name="origine" value="guide-quasi-resident-geneve-taxation-ordinaire-ulterieure">
+      <input type="hidden" name="canal" value="">
+      <label for="email-guide-quasi-resident-geneve-taxation-ordinaire-ulterieure">Adresse e-mail</label>
+      <input type="email" id="email-guide-quasi-resident-geneve-taxation-ordinaire-ulterieure" name="email" required autocomplete="email" placeholder="vous@exemple.fr">
+      <label class="check"><input type="checkbox" name="consentement" value="oui" required><span>J'accepte que mon adresse soit conservée pour recevoir ces rappels.</span></label>
+      <div class="actions"><button class="primary" type="submit">Recevoir le rappel</button></div>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
   </article>
 </main>
 <footer>
@@ -106,5 +120,6 @@
   </div>
 </footer>
 <script type="module" src="../analytics.js"></script>
+<script type="module" src="../signup.js"></script>
 </body>
 </html>
