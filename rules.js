@@ -48,20 +48,27 @@ export const RULES = [
   {
     id: "declaration-base",
     when: () => true,
-    title: "Déclaration de revenus française (2042) avec revenus de source étrangère",
+    title: "Déclaration de revenus française (2042) avec l'annexe 2047",
     detail:
-      "Vous êtes résident fiscal français : vous déclarez vos revenus en France, y compris ceux perçus en Suisse. La façon de les déclarer dépend du canton (voir les points suivants).",
-    source: { label: "impots.gouv.fr — formulaires 2042 et 2047", url: "https://www.impots.gouv.fr" },
-    status: "a_verifier",
+      "Vous êtes domicilié en France : vos revenus de source étrangère, dont ceux perçus en Suisse, se déclarent en France. L'annexe 2047 (revenus de source étrangère ou encaissés à l'étranger) est obligatoire. Si vous déclarez en ligne, sélectionnez les annexes en début de déclaration (« Déclarations annexes ») pour bénéficier des reports automatiques. La façon de déclarer le salaire dépend du canton (voir les points suivants).",
+    source: { label: "impots.gouv.fr — notice 2047, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — annexe 2047-SUISSE, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5489.pdf" },
+    ],
+    status: "verifie",
   },
   {
     id: "canton-source",
     when: (a) => a.canton === "GE",
-    title: "Salaire genevois : formulaire 2047 (rubrique Suisse), reporté sur la 2042",
+    title: "Salaire genevois : annexe 2047-SUISSE, puis 2047 et 2042 (cases 1AF et 8TK)",
     detail:
-      "Le salaire genevois se déclare sur la 2047 (Suisse), puis les montants sont reportés sur la 2042 (cases 1AF et 8TK d'après une source secondaire). Il ouvre droit à un crédit d'impôt égal à l'impôt français, pour éviter la double imposition. Les cotisations suisses déductibles (cotisations sociales, LPP obligatoire, LAMal de base ou CMU) se placent aux bons endroits, et la case 8SH concerne les affiliés à la LAMal. L'attestation 2041-AS n'est pas nécessaire pour un salarié à Genève. Taux de change : celui publié dans la notice de la 2047 de l'année.",
-    source: { label: "impot-quasi-resident.ch (source secondaire) — à recouper avec la notice 2047 officielle", url: "https://www.impot-quasi-resident.ch/impots/impots-francais/" },
-    status: "a_verifier",
+      "Genève relève du « cas 2 » de l'annexe 2047-SUISSE : le salaire est déclaré et imposé en France, sous déduction d'un crédit d'impôt égal à l'impôt français, si votre salaire a bien été soumis au barème normal de l'impôt à la source suisse (sinon, l'annexe renvoie au cas 3). Remplissez un feuillet 2047-SUISSE par canton et par frontalier, à partir de votre certificat de salaire, en retirant les charges listées par l'annexe (cotisations AVS-AI-APG-AC-AANP, 2e pilier obligatoire, LAMal de base, rachat LPP dans certaines limites). Pour les revenus 2025, la conversion en euros se fait au taux de 1,07 indiqué sur l'annexe. Reports : automatiques en ligne ; sur papier, lignes 1AF à 1DF et 8TK de la 2042, cadres 1 et 6 de la 2047. L'attestation 2041-AS concerne le cas 1 (8 cantons de l'accord), pas Genève. La cotisation spéciale « frontaliers » CNTFS/Urssaf, si vous la payez, se porte en ligne 6DD de la 2042 C. La case 8SH de la 2042 C (exonération de CSG-CRDS sur les revenus du patrimoine) concerne les personnes affiliées à l'assurance maladie suisse et non à un régime obligatoire de sécurité sociale français.",
+    source: { label: "impots.gouv.fr — annexe 2047-SUISSE, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5489.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — notice 2047, revenus 2025 (lignes 1AF à 1DF et 8TK)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
+      { label: "impots.gouv.fr — déclaration 2042 C, revenus 2025 (cases 6DD et 8SH)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5472.pdf" },
+    ],
+    status: "verifie",
   },
   {
     id: "canton-autre",
@@ -75,19 +82,25 @@ export const RULES = [
   {
     id: "canton-france",
     when: (a) => ["VD", "VS", "NE", "JU", "BE", "BS", "BL", "SO"].includes(a.canton),
-    title: "Canton imposé en France : attestation 2041-AS et imposition en France",
+    title: "Canton de l'accord de 1983 : attestation 2041-AS et imposition en France",
     detail:
-      "Les huit cantons de l'accord de 1983 (BE, BS, BL, JU, NE, SO, VD, VS) relèvent d'un régime où l'imposition se fait en France. Le régime applicable à VD et aux nouveaux frontaliers doit être confirmé sur la notice officielle.",
-    source: { label: "impots.gouv.fr — formulaire 2041-AS", url: "https://www.impots.gouv.fr" },
-    status: "a_verifier",
+      "Les huit cantons de l'accord frontalier du 11 avril 1983 (Bâle-Campagne, Bâle-Ville, Berne, Jura, Neuchâtel, Soleure, Valais, Vaud) relèvent du « cas 1 » de l'annexe 2047-SUISSE. Si vous êtes travailleur frontalier (retour en France en règle générale chaque jour, soit 45 nuitées maximum en Suisse par an pour un temps plein) et détenteur de l'attestation 2041-AS ou 2041-ASK, votre salaire suisse est imposable en France. Cochez la case « cas 1 » de la 2047-SUISSE : en ligne, les reports sont automatiques. Sur papier : lignes 1AG à 1DG de la 2042 et cadre 1 de la 2047, puis ligne 8TJ/8TY (en francs suisses) pour recevoir automatiquement l'attestation 2041-ASK l'année suivante. Sans attestation 2041-AS, l'annexe indique de l'imprimer sur impots.gouv.fr et de vous rapprocher de votre service des impôts des particuliers. Si vous ne rentrez que le week-end, l'annexe renvoie aux cas 2 ou 3.",
+    source: { label: "impots.gouv.fr — annexe 2047-SUISSE, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5489.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — notice 2047, revenus 2025 (lignes 1AG à 1DG)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
+    ],
+    status: "verifie",
   },
   {
     id: "3916",
     when: (a) => a.compteSuisse === "oui",
-    title: "Déclarer vos comptes bancaires suisses (formulaire 3916)",
+    title: "Déclarer vos comptes bancaires suisses (formulaire 3916, case 8UU)",
     detail:
-      "Les comptes détenus, utilisés, ouverts ou clos à l'étranger pendant l'année se déclarent en joignant le formulaire à la déclaration 2042. Un compte non déclaré expose à une amende de 1 500 € par compte (10 000 € si le pays n'a pas de convention d'assistance administrative avec la France). Les contrats de 3e pilier auprès d'un assureur suisse sont à déclarer aussi (source secondaire : cases 8UU pour les comptes et 8TT pour les contrats).",
-    source: { label: "impots.gouv.fr — notice 3916", url: "https://static.impots.gouv.fr/tdir/static/2026-03-30T16:36:08Z/aide/notices/notices2020/3916/notice3916.pdf" },
+      "Les comptes ouverts, détenus, utilisés ou clos à l'étranger pendant l'année se déclarent avec le formulaire 3916, une déclaration par compte, jointe à la déclaration 2042 (à remplir en ligne si vous déclarez en ligne). Sur la 2042, cochez la case 8UU. Les contrats d'assurance-vie ou de capitalisation souscrits hors de France se déclarent aussi (case 8TT). Un compte non déclaré expose à une amende de 1 500 € par compte, portée à 10 000 € si l'État n'a pas conclu avec la France de convention d'assistance administrative permettant l'accès aux renseignements bancaires. Le cas du 3e pilier suisse n'est pas précisé dans les documents officiels consultés : renseignez-vous auprès de votre service des impôts.",
+    source: { label: "impots.gouv.fr — formulaire et notice 3916, mars 2026", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/3916/2026/3916_5454.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — déclaration 2042, revenus 2025 (cases 8UU et 8TT)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5535.pdf" },
+    ],
     status: "verifie",
   },
   {
