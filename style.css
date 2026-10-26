@@ -97,7 +97,9 @@ section { scroll-margin-top:72px; }
 .section-head h2 { font-size:clamp(1.6rem, 3vw, 2.2rem); margin:0 0 10px; }
 .section-head p { color:var(--muted); margin:0; font-size:1.05rem; }
 .grid-3 { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
-@media (max-width:880px) { .grid-3 { grid-template-columns:1fr; } }
+.grid-2 { display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; }
+.grid-2 .card { margin:0; }
+@media (max-width:880px) { .grid-3, .grid-2 { grid-template-columns:1fr; } }
 .card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:12px; }
 .grid-3 .card { margin:0; }
 .step-num { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; font-weight:800; background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:var(--on-accent); margin-bottom:12px; }
