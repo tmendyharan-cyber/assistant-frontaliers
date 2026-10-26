@@ -116,12 +116,34 @@ export const RULES = [
     status: "verifie",
   },
   {
-    id: "teletravail",
-    when: (a) => a.teletravail === "oui",
-    title: "Télétravail depuis la France : points d'attention",
+    id: "teletravail-impot-ge",
+    when: (a) => a.teletravail === "oui" && a.canton === "GE",
+    title: "Télétravail depuis la France et impôt : le seuil de 40 %",
     detail:
-      "Le télétravail depuis la France peut avoir des effets sur la fiscalité et sur les cotisations sociales. Les règles dépendent du pays d'emploi et d'un seuil de jours : consultez la notice officielle avant de déclarer.",
-    source: { label: "impots.gouv.fr — frontaliers", url: "https://www.impots.gouv.fr" },
+      "Depuis le 1er janvier 2026, un avenant à la convention fiscale franco-suisse s'applique. Jusqu'à 40 % de votre temps de travail annuel en télétravail depuis la France (environ 2 jours par semaine à temps plein), la totalité du salaire reste soumise à l'impôt à la source suisse. La limite se calcule par année civile, pas par semaine. Jusqu'à 10 jours de missions temporaires à l'étranger par an sont comptés dans ces 40 %. Au-delà de 40 %, la part du salaire correspondant aux jours télétravaillés est imposable en France dès le 1er jour, et il devient difficile d'atteindre le seuil de 90 % du statut de quasi-résident. La façon de déclarer en France cette part n'est pas détaillée par les sources consultées : renseignez-vous auprès de votre service des impôts.",
+    source: { label: "ge.ch — jusqu'à 40 % d'activité en télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/40-activite-teletravail" },
+    moreSources: [
+      { label: "ge.ch — au-delà de 40 % d'activité en télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/au-dela-40-activite-teletravail" },
+      { label: "ge.ch — accords applicables au télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/accords-applicables-au-teletravail" },
+    ],
+    status: "verifie",
+  },
+  {
+    id: "teletravail-securite-sociale",
+    when: (a) => a.teletravail === "oui",
+    title: "Télétravail et sécurité sociale : les seuils de 25 % et 50 %",
+    detail:
+      "Règle de base : si vous télétravaillez au moins 25 % de votre temps de travail en France, vous relevez de la sécurité sociale française. La France et la Suisse ont signé un accord-cadre : avec un télétravail inférieur à 50 % de votre temps de travail total, vous pouvez rester affilié à la sécurité sociale suisse, à condition que tous vos employeurs soient établis en Suisse et que vous n'exerciez pas d'autre activité en France. C'est votre employeur qui fait la demande ; il reçoit une attestation A1, valable 3 ans au maximum.",
+    source: { label: "CLEISS — télétravail transfrontalier en Europe", url: "https://www.cleiss.fr/particuliers/teletravail-transfrontalier.html" },
+    status: "verifie",
+  },
+  {
+    id: "teletravail-autres-cantons",
+    when: (a) => a.teletravail === "oui" && a.canton !== "GE",
+    title: "Télétravail et impôt : régime non vérifié pour votre canton",
+    detail:
+      "Le régime fiscal du télétravail (seuil de 40 %) n'a été vérifié ici que pour Genève. Pour les cantons de l'accord de 1983, votre salaire est déjà imposable en France (voir point précédent). Consultez votre service des impôts ou l'administration fiscale de votre canton avant de déclarer.",
+    source: { label: "ge.ch — accords applicables au télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/accords-applicables-au-teletravail" },
     status: "a_verifier",
   },
   {
