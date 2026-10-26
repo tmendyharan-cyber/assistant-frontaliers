@@ -197,3 +197,4 @@ footer nav { display:flex; flex-wrap:wrap; gap:16px; }
 }
 .brand, .site-nav .btn { white-space:nowrap; }
 @media (max-width:420px) { .hide-sm { display:none; } .site-nav .btn { padding:7px 12px; } }
+.guide-link { margin:10px 0 0; font-weight:600; }

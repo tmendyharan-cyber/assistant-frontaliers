@@ -44,6 +44,7 @@ export const QUESTIONS = [
 ];
 
 // Chaque règle : quand elle s'applique, et ce qu'elle ajoute à la checklist.
+// guide (facultatif) : guide détaillé du site, affiché sous les sources.
 export const RULES = [
   {
     id: "declaration-base",
@@ -68,6 +69,7 @@ export const RULES = [
       { label: "impots.gouv.fr — notice 2047, revenus 2025 (lignes 1AF à 1DF et 8TK)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
       { label: "impots.gouv.fr — déclaration 2042 C, revenus 2025 (cases 6DD et 8SH)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5472.pdf" },
     ],
+    guide: "articles/formulaire-2047-suisse-frontalier.html",
     status: "verifie",
   },
   {
@@ -80,6 +82,7 @@ export const RULES = [
     moreSources: [
       { label: "impots.gouv.fr — notice 2047, revenus 2025 (cantons n'ayant pas signé l'accord frontalier)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
     ],
+    guide: "articles/formulaire-2047-suisse-frontalier.html",
     status: "verifie",
   },
   {
@@ -92,6 +95,7 @@ export const RULES = [
     moreSources: [
       { label: "impots.gouv.fr — notice 2047, revenus 2025 (lignes 1AG à 1DG)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
     ],
+    guide: "articles/2041-as-frontalier-vaud-accord-1983.html",
     status: "verifie",
   },
   {
@@ -104,6 +108,7 @@ export const RULES = [
     moreSources: [
       { label: "impots.gouv.fr — déclaration 2042, revenus 2025 (cases 8UU et 8TT)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5535.pdf" },
     ],
+    guide: "articles/3916-compte-bancaire-suisse-frontalier.html",
     status: "verifie",
   },
   {
@@ -116,6 +121,7 @@ export const RULES = [
     moreSources: [
       { label: "ge.ch — formulaire DRIS/TOU : délai et irrévocabilité", url: "https://www.ge.ch/demande-rectification-taxation-ordinaire-ulterieure/comment-remplir-formulaire-dris/tou" },
     ],
+    guide: "articles/quasi-resident-geneve-taxation-ordinaire-ulterieure.html",
     status: "verifie",
   },
   {
@@ -129,6 +135,7 @@ export const RULES = [
       { label: "ge.ch — au-delà de 40 % d'activité en télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/au-dela-40-activite-teletravail" },
       { label: "ge.ch — accords applicables au télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/accords-applicables-au-teletravail" },
     ],
+    guide: "articles/teletravail-frontalier-geneve-40-pourcent.html",
     status: "verifie",
   },
   {
@@ -147,6 +154,7 @@ export const RULES = [
     detail:
       "L'avenant à la convention fiscale franco-suisse, entré en vigueur le 24 juillet 2025, s'applique depuis le 1er janvier 2026 : dans la limite de 40 % du temps de travail par année civile, la rémunération du télétravail est imposable dans l'État où se situe l'employeur. Les modalités pratiques (calcul du taux, missions, au-delà de 40 %) détaillées par cet outil sont celles publiées par le canton de Genève : vérifiez-les auprès de l'administration fiscale de votre canton.",
     source: { label: "Confédération (SIF) — entrée en vigueur de l'avenant franco-suisse", url: "https://www.sif.admin.ch/fr/entree-en-vigueur-de-lavenant-a-la-convention-entre-la-suisse-et-la-france-contre-les-doubles-impositions" },
+    guide: "articles/teletravail-frontalier-geneve-40-pourcent.html",
     status: "verifie",
   },
   {

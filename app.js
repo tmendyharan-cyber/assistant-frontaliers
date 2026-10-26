@@ -1,4 +1,6 @@
 import { QUESTIONS, RULES, DOCUMENTS, DISCLAIMER } from "./rules.js";
+import { WAITLIST_ENDPOINT } from "./config.js";
+import { track } from "./analytics.js";
 
 const app = document.getElementById("app");
 document.getElementById("disc").textContent = DISCLAIMER;
@@ -73,6 +75,48 @@ function renderQuestion() {
   focusHeading(heading);
 }
 
+// Inscription aux rappels après la checklist. Seuls l'e-mail et le consentement sont envoyés :
+// les réponses au questionnaire ne quittent pas le navigateur.
+function reminderCard() {
+  const card = el("div", { class: "card upsell", id: "rappel" });
+  card.append(el("h3", {}, "Recevoir un rappel avant la déclaration 2027"));
+  if (!WAITLIST_ENDPOINT) {
+    card.append(el("p", {}, "Les formules en préparation sauvegardent votre checklist et vous rappellent les dates."), el("a", { class: "btn btn-primary", href: "#tarifs" }, "Voir les formules"));
+    return card;
+  }
+  const src = new URLSearchParams(location.search).get("src") || "";
+  const status = el("p", { class: "form-status", role: "status", "aria-live": "polite" });
+  const form = el(
+    "form",
+    { method: "post", action: WAITLIST_ENDPOINT },
+    el("p", {}, "Un e-mail gratuit quand les documents officiels de la campagne 2027 sortent, et à l'ouverture des formules. Seule votre adresse est conservée, pas vos réponses. ", el("a", { href: "confidentialite.html" }, "Confidentialité")),
+    el("input", { type: "hidden", name: "formule", value: "rappels-gratuits" }),
+    el("input", { type: "hidden", name: "origine", value: "checklist" }),
+    el("input", { type: "hidden", name: "canal", value: src }),
+    el("label", { for: "rappel-email" }, "Adresse e-mail"),
+    el("input", { type: "email", id: "rappel-email", name: "email", required: "", autocomplete: "email", placeholder: "vous@exemple.fr" }),
+    el("label", { class: "check" }, el("input", { type: "checkbox", name: "consentement", value: "oui", required: "" }), el("span", {}, "J'accepte que mon adresse soit conservée pour recevoir ces rappels.")),
+    el("div", { class: "actions" }, el("button", { class: "primary", type: "submit" }, "Recevoir le rappel"), el("a", { class: "btn", href: "#tarifs" }, "Voir les formules")),
+    status
+  );
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const button = form.querySelector("button[type=submit]");
+    button.disabled = true;
+    try {
+      const res = await fetch(WAITLIST_ENDPOINT, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      if (!res.ok) throw new Error(String(res.status));
+      track("Inscription rappel", { canal: src });
+      form.replaceChildren(el("p", { class: "form-status", role: "status" }, "C'est noté : vous recevrez un rappel."));
+    } catch {
+      status.textContent = "L'envoi n'a pas abouti. Réessayez dans un instant.";
+      button.disabled = false;
+    }
+  });
+  card.append(form);
+  return card;
+}
+
 export function applicableRules(a) {
   return RULES.filter((r) => r.when(a));
 }
@@ -94,6 +138,7 @@ function renderResult() {
       el("a", { href: src.url, target: "_blank", rel: "noopener noreferrer" }, src.label, el("span", { class: "sr-only" }, " (nouvel onglet)"))
     );
     card.append(...links.flatMap((a, i) => (i ? [el("br"), a] : [a])));
+    if (r.guide) card.append(el("p", { class: "guide-link" }, el("a", { href: r.guide }, "Lire le guide détaillé →")));
     nodes.push(card);
   }
 
@@ -103,15 +148,7 @@ function renderResult() {
   docs.append(ul);
   nodes.push(docs);
 
-  nodes.push(
-    el(
-      "div",
-      { class: "card upsell" },
-      el("h3", {}, "Ne rien oublier l'an prochain"),
-      el("p", {}, "Les formules en préparation sauvegardent votre checklist, vous rappellent les dates et vous préviennent quand une notice change."),
-      el("a", { class: "btn btn-primary", href: "#tarifs" }, "Voir les formules")
-    )
-  );
+  nodes.push(reminderCard());
 
   nodes.push(
     el(
