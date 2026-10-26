@@ -73,11 +73,14 @@ export const RULES = [
   {
     id: "canton-autre",
     when: (a) => a.canton === "AUTRE",
-    title: "Canton non couvert par cette version",
+    title: "Autre canton : même déclaration française que Genève (cas 2)",
     detail:
-      "Cette version couvre Genève et les cantons de l'accord de 1983. Pour un autre canton, consultez directement la notice officielle de la 2047.",
-    source: { label: "impots.gouv.fr", url: "https://www.impots.gouv.fr" },
-    status: "a_verifier",
+      "Si votre canton ne fait pas partie des 8 cantons de l'accord frontalier de 1983, vous relevez, comme Genève, du « cas 2 » de l'annexe 2047-SUISSE (« autres salariés imposés par la Suisse ») : le salaire est déclaré et imposé en France, sous déduction d'un crédit d'impôt égal à l'impôt français, s'il a été soumis au barème normal de l'impôt à la source suisse. Remplissez un feuillet 2047-SUISSE par canton (taux de conversion de 1,07 pour les revenus 2025) ; sur papier, reports en lignes 1AF à 1DF et 8TK de la 2042. Le statut de quasi-résident et les détails donnés par cet outil sur le télétravail viennent du canton de Genève : renseignez-vous auprès de l'administration fiscale de votre canton pour sa procédure.",
+    source: { label: "impots.gouv.fr — annexe 2047-SUISSE, revenus 2025 (cas 2)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5489.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — notice 2047, revenus 2025 (cantons n'ayant pas signé l'accord frontalier)", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5490.pdf" },
+    ],
+    status: "verifie",
   },
   {
     id: "canton-france",
@@ -138,27 +141,49 @@ export const RULES = [
     status: "verifie",
   },
   {
-    id: "teletravail-autres-cantons",
-    when: (a) => a.teletravail === "oui" && a.canton !== "GE",
-    title: "Télétravail et impôt : régime non vérifié pour votre canton",
+    id: "teletravail-impot-autre",
+    when: (a) => a.teletravail === "oui" && a.canton === "AUTRE",
+    title: "Télétravail et impôt : la limite de 40 % de l'avenant franco-suisse",
     detail:
-      "Le régime fiscal du télétravail (seuil de 40 %) n'a été vérifié ici que pour Genève. Pour les cantons de l'accord de 1983, votre salaire est déjà imposable en France (voir point précédent). Consultez votre service des impôts ou l'administration fiscale de votre canton avant de déclarer.",
+      "L'avenant à la convention fiscale franco-suisse, entré en vigueur le 24 juillet 2025, s'applique depuis le 1er janvier 2026 : dans la limite de 40 % du temps de travail par année civile, la rémunération du télétravail est imposable dans l'État où se situe l'employeur. Les modalités pratiques (calcul du taux, missions, au-delà de 40 %) détaillées par cet outil sont celles publiées par le canton de Genève : vérifiez-les auprès de l'administration fiscale de votre canton.",
+    source: { label: "Confédération (SIF) — entrée en vigueur de l'avenant franco-suisse", url: "https://www.sif.admin.ch/fr/entree-en-vigueur-de-lavenant-a-la-convention-entre-la-suisse-et-la-france-contre-les-doubles-impositions" },
+    status: "verifie",
+  },
+  {
+    id: "teletravail-accord-1983",
+    when: (a) => a.teletravail === "oui" && ["VD", "VS", "NE", "JU", "BE", "BS", "BL", "SO"].includes(a.canton),
+    title: "Télétravail et impôt : situation non vérifiée pour les cantons de l'accord de 1983",
+    detail:
+      "Votre salaire est imposable en France au titre de l'accord frontalier de 1983 (voir point précédent). L'effet du télétravail sur ce régime n'est pas décrit dans les sources officielles consultées. Consultez votre service des impôts avant de déclarer.",
     source: { label: "ge.ch — accords applicables au télétravail", url: "https://www.ge.ch/imposition-du-teletravail-personnes-frontalieres/accords-applicables-au-teletravail" },
     status: "a_verifier",
   },
   {
     id: "foyer",
     when: (a) => a.famille === "oui",
-    title: "Foyer : déclarer conjoint et personnes à charge",
+    title: "Foyer : déclaration commune, concubinage et personnes à charge",
     detail:
-      "Rassemblez les justificatifs de situation familiale. Les revenus du conjoint, en France ou en Suisse, doivent être déclarés dans la déclaration commune.",
-    source: { label: "impots.gouv.fr — déclaration en couple", url: "https://www.impots.gouv.fr" },
-    status: "a_verifier",
+      "Mariés ou pacsés : vous êtes imposés ensemble sur une déclaration commune, avec l'ensemble des revenus et des charges du couple. L'année du mariage ou du Pacs, une option pour l'imposition séparée existe (irrévocable pour l'année, avec des exceptions détaillées dans la notice). En concubinage, chacun est imposable séparément ; les enfants communs comptent selon la charge que chacun assume. Les personnes à charge augmentent le nombre de parts (une demi-part pour chacune des deux premières, une part à partir de la troisième). Un enfant mineur en résidence alternée est présumé à charge partagée entre ses parents (à indiquer case H). Rassemblez les justificatifs de votre situation familiale.",
+    source: { label: "impots.gouv.fr — notice de la déclaration 2042, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5477.pdf" },
+    status: "verifie",
+  },
+  {
+    id: "foyer-conjoint",
+    when: (a) => a.famille === "oui" && a.revenuConjoint === "oui",
+    title: "Revenus du conjoint : sur la déclaration commune, avec sa propre 2047-SUISSE s'il travaille en Suisse",
+    detail:
+      "Si vous êtes mariés ou pacsés, les revenus de votre conjoint figurent sur votre déclaration commune. S'il travaille aussi en Suisse, remplissez un feuillet 2047-SUISSE à son nom (case « Déclarant 2 ») : l'annexe prévoit un feuillet par canton et par frontalier. Son propre canton de travail détermine son cas (cas 1 pour les 8 cantons de l'accord de 1983, cas 2 pour Genève et les autres cantons). À Genève, pour le statut de quasi-résident d'un couple marié, les revenus mondiaux des deux conjoints sont additionnés.",
+    source: { label: "impots.gouv.fr — annexe 2047-SUISSE, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2047/2026/2047_5489.pdf" },
+    moreSources: [
+      { label: "impots.gouv.fr — notice de la déclaration 2042, revenus 2025", url: "https://www.impots.gouv.fr/sites/default/files/formulaires/2042/2026/2042_5477.pdf" },
+      { label: "ge.ch — déterminer le statut de quasi-résident", url: "https://www.ge.ch/demande-rectification-taxation-ordinaire-ulterieure/determiner-statut-quasi-resident" },
+    ],
+    status: "verifie",
   },
 ];
 
 export const DOCUMENTS = [
-  "Certificat de salaire suisse (formulaire 11 ou équivalent) de l'année concernée",
+  "Certificat de salaire suisse (Lohnausweis) de l'année concernée",
   "Relevés annuels de vos comptes suisses (solde et intérêts)",
   "Avis d'imposition français de l'année précédente",
   "Justificatifs de votre situation familiale",
