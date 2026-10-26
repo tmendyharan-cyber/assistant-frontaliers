@@ -1,19 +1,20 @@
-/* Contrastes vérifiés (WCAG 2.1 AA) : texte ≥ 4,5:1, bordures de contrôles ≥ 3:1.
+/* Identité Déclic Frontalier : bleu #185FA5, vert #1D9E75, marine #042C53.
+   Contrastes vérifiés (WCAG 2.1 AA) : texte ≥ 4,5:1, bordures de contrôles ≥ 3:1.
    Polices système uniquement : aucune requête vers un service de polices tiers. */
 :root {
   --bg:#f6f7fb; --bg-2:#eef1f8; --fg:#141a24; --muted:#525d6b; --card:#fff; --card-2:#f9fafc;
-  --accent:#1f56d6; --accent-2:#0d7a6f; --on-accent:#fff; --accent-soft:#e6edfd;
+  --accent:#185FA5; --accent-2:#0F6E56; --on-accent:#fff; --accent-soft:#E6F1FB;
   --line:#dfe3ec; --control:#8a96a3; --warn:#8a5a00; --ok:#0b6b3a;
-  --blob-1:#9db8ff; --blob-2:#8fe3d4; --blob-3:#c9b6ff;
+  --blob-1:#85B7EB; --blob-2:#9FE1CB; --blob-3:#B5D4F4;
   --shadow:0 1px 2px rgba(16,24,40,.05), 0 8px 24px rgba(16,24,40,.08);
   --radius:14px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg:#0e1117; --bg-2:#141924; --fg:#e8ebf1; --muted:#9da8b6; --card:#161b26; --card-2:#1b2130;
-    --accent:#7aa7ff; --accent-2:#5fd1bf; --on-accent:#0e1117; --accent-soft:#1c2740;
+    --accent:#85B7EB; --accent-2:#5DCAA5; --on-accent:#0e1117; --accent-soft:#13263f;
     --line:#2a3242; --control:#6b7682; --warn:#e0b050; --ok:#5fd18f;
-    --blob-1:#2b4b9e; --blob-2:#145e57; --blob-3:#4a3a8c;
+    --blob-1:#185FA5; --blob-2:#0F6E56; --blob-3:#0C447C;
     --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
   }
 }
@@ -33,7 +34,8 @@ h1, h2, h3 { line-height:1.2; letter-spacing:-.01em; }
 .site-header { position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.4) blur(12px); -webkit-backdrop-filter:saturate(1.4) blur(12px); background:color-mix(in srgb, var(--bg) 78%, transparent); border-bottom:1px solid var(--line); }
 .site-header .wrap { display:flex; align-items:center; gap:16px; height:60px; }
 .brand { display:flex; align-items:center; gap:10px; font-weight:700; color:var(--fg); text-decoration:none; }
-.brand-mark { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); display:grid; place-items:center; color:var(--on-accent); font-size:.8rem; font-weight:800; }
+.brand img { display:block; }
+.brand-name span { font-weight:500; color:var(--muted); }
 .site-nav { margin-left:auto; display:flex; align-items:center; gap:20px; }
 .site-nav a { color:var(--muted); text-decoration:none; font-size:.95rem; }
 .site-nav a:hover { color:var(--fg); }
